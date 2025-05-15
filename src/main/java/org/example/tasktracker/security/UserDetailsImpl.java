@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
 @RequiredArgsConstructor
-public class PersonDetails implements UserDetails {
+@Getter
+public class UserDetailsImpl implements UserDetails {
 
     private final User user;
 
