@@ -1,12 +1,10 @@
 package org.example.tasktracker.controller;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.tasktracker.dto.JwtResponseDto;
 import org.example.tasktracker.dto.UserRequestDto;
-import org.example.tasktracker.dto.UserResponseDto;
 import org.example.tasktracker.service.AuthService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,21 +16,22 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/user")
-    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRequestDto userRequestDto, HttpSession session) {
+    public ResponseEntity<JwtResponseDto> signUp(@RequestBody UserRequestDto userRequestDto) {
 
-        UserResponseDto userResponseDto = authService.createUser(userRequestDto);
-        authService.login(userRequestDto, session);
+        authService.createUser(userRequestDto);
+
+        JwtResponseDto jwtResponseDto = authService.login(userRequestDto);
 
         return ResponseEntity.ok()
-                .body(userResponseDto);
+                .body(jwtResponseDto);
     }
 
-    @GetMapping("/auth/login")
-    public ResponseEntity<UserResponseDto> signIn(@RequestBody UserRequestDto userRequestDto, HttpSession session) {
+    @PostMapping("/auth/login")
+    public ResponseEntity<JwtResponseDto> signIn(@RequestBody UserRequestDto userRequestDto) {
 
-        UserResponseDto user = authService.login(userRequestDto, session);
+        JwtResponseDto jwtResponseDto = authService.login(userRequestDto);
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(jwtResponseDto);
     }
 
     @PostMapping("/auth/sing-out")
