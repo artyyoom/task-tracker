@@ -23,9 +23,8 @@ public class Task {
 
     private String description;
 
-    @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private Long userId;
 
     @Column(nullable = false)
     private String status;
