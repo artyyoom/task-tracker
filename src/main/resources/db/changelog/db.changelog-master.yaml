@@ -54,7 +54,7 @@ databaseChangeLog:
                   name: description
                   type: TEXT
               - column:
-                  name: owner_id
+                  name: user_id
                   type: BIGINT
                   constraints:
                     nullable: false
@@ -67,7 +67,7 @@ databaseChangeLog:
                   name: done_timestamp
                   type: TIMESTAMP
         - addForeignKeyConstraint:
-            baseColumnNames: owner_id
+            baseColumnNames: user_id
             baseTableName: tasks
             constraintName: fk_tasks_owner
             referencedColumnNames: id
