@@ -73,3 +73,11 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: users
             onDelete: CASCADE
+  - changeSet:
+      id: 3
+      author: arttt (generated)
+      changes:
+        - sql:
+            sql: INSERT INTO users (username, password, email) VALUES ('user', 'user', 'user@example.com');
+        - sql:
+            sql: INSERT INTO users (username, password, email) VALUES ('root', 'root', 'root@example.com');
