@@ -27,13 +27,13 @@ public class AuthService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
         try {
             User user = userMapper.toUser(userRequestDto);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(String.format("{noop}%s", user.getPassword()));
 
             userRepository.save(user);
 

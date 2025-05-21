@@ -80,4 +80,4 @@ databaseChangeLog:
         - sql:
             sql: INSERT INTO users (username, password, email) VALUES ('user', 'user', 'user@example.com');
         - sql:
-            sql: INSERT INTO users (username, password, email) VALUES ('root', 'root', 'root@example.com');
+            sql: INSERT INTO users (username, password, email) VALUES ('admin', 'admin', 'admin@example.com');

@@ -24,7 +24,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public void updateTask(Task task) {
+    public Task updateTask(Task task) {
 
         Task taskById = taskRepository.findById(task.getId())
                 .orElseThrow(() -> new DataNotFoundException("Task not found"));
@@ -33,7 +33,7 @@ public class TaskService {
         taskById.setStatus(task.getStatus());
         taskById.setDone_timestamp(task.getDone_timestamp());
 
-        taskRepository.save(taskById);
+        return taskRepository.save(taskById);
     }
 
     public void deleteTask(Long id) {
