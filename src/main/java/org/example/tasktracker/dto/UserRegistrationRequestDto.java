@@ -7,7 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class UserRequestDto {
+public class UserRegistrationRequestDto implements UserRequestDtoProvider {
+
     private String username;
     private String password;
     private String email;

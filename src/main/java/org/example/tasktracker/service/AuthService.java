@@ -1,10 +1,7 @@
 package org.example.tasktracker.service;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.tasktracker.dto.JwtResponseDto;
-import org.example.tasktracker.dto.UserRequestDto;
-import org.example.tasktracker.dto.UserResponseDto;
+import org.example.tasktracker.dto.*;
 import org.example.tasktracker.exception.DataAlreadyExistsException;
 import org.example.tasktracker.exception.DataNotFoundException;
 import org.example.tasktracker.exception.DatabaseException;
@@ -17,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,9 +26,9 @@ public class AuthService {
 //    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
-    public UserResponseDto createUser(UserRequestDto userRequestDto) {
+    public UserResponseDto createUser(UserRegistrationRequestDto userRegistrationRequestDto) {
         try {
-            User user = userMapper.toUser(userRequestDto);
+            User user = userMapper.toUser(userRegistrationRequestDto);
             user.setPassword(String.format("{noop}%s", user.getPassword()));
 
             userRepository.save(user);
@@ -45,15 +41,15 @@ public class AuthService {
         }
     }
 
-    public JwtResponseDto login(UserRequestDto userRequestDto) {
+    public JwtResponseDto login(UserRequestDtoProvider userRequestDtoProvider) {
         try {
 
-            User user = userRepository.findByUsername(userRequestDto.getUsername()).orElseThrow(() -> new DataNotFoundException(userRequestDto.getUsername()));
+            User user = userRepository.findByUsername(userRequestDtoProvider.getUsername()).orElseThrow(() -> new DataNotFoundException(userRequestDtoProvider.getUsername()));
 
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            userRequestDto.getUsername(),
-                            userRequestDto.getPassword()
+                            userRequestDtoProvider.getUsername(),
+                            userRequestDtoProvider.getPassword()
                     )
             );
 
