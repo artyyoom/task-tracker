@@ -1,7 +1,6 @@
 package org.example.tasktracker.config.kafka;
 
 import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
-public class KafkaConsumer {
+public class ConsumerConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
@@ -24,13 +23,13 @@ public class KafkaConsumer {
         
         Map<String, Object> config = new HashMap<>();
         config.put(
-                ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
+                org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 bootstrapServers);
         config.put(
-                ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+                org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
                 StringDeserializer.class);
         config.put(
-                ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+                org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
                 StringDeserializer.class);
 
         return new DefaultKafkaConsumerFactory<>(config);
