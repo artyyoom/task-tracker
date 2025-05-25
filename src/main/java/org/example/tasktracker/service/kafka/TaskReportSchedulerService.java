@@ -32,8 +32,8 @@ public class TaskReportSchedulerService {
         LocalDateTime yesterday = today.minusDays(1);
 
         for (User user : allUsers) {
-            List<Task> finishedTasks = userService.getFinishedTasks(user.getId(), today, yesterday);
-            List<Task> unfinishedTasks = userService.getUnfinishedTasks(user.getId(), today, yesterday);
+            List<Task> finishedTasks = userService.getFinishedTasks(user.getId(), yesterday, today);
+            List<Task> unfinishedTasks = userService.getUnfinishedTasks(user.getId());
 
             if (finishedTasks.isEmpty() && unfinishedTasks.isEmpty()) {
                 continue;
@@ -43,7 +43,7 @@ public class TaskReportSchedulerService {
 
             if (!unfinishedTasks.isEmpty()) {
                 int count = unfinishedTasks.size();
-                emailBody.append("У вас осталось ").append(count).append(" несделанных задач ");
+                emailBody.append("У вас осталось ").append(count).append(" несделанных задач\n");
 
                 unfinishedTasks.forEach(task -> {
                     emailBody.append("- ").append(task.getTitle()).append("\n");

@@ -60,7 +60,8 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: status
-                  type: VARCHAR(50)
+                  type: BOOLEAN
+                  defaultValueBoolean: false
                   constraints:
                     nullable: false
               - column:
@@ -86,8 +87,10 @@ databaseChangeLog:
       author: arttt (generated)
       changes:
         - sql:
-            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Первая задача', 'Описание первой задачи', 1, 'finished', '2025-05-24 10:00:00');
+            sql: INSERT INTO tasks (title, description, user_id, done_timestamp) VALUES ('Первая задача', 'Описание первой задачи', 1, '2025-05-25 8:00:00.1231611592');
         - sql:
-            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Вторая задача', 'Описание второй задачи', 1, 'unfinished', '2025-05-24 10:00:00');
+            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Вторая задача', 'Описание второй задачи', 1, true, '2025-05-25 8:00:00.1231611592');
         - sql:
-            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Третья задача', 'Описание третьей задачи', 2, 'finished', '2025-05-24 10:00:00');
+            sql: INSERT INTO tasks (title, description, user_id, done_timestamp) VALUES ('Третья задача', 'Описание третьей задачи', 1, '2025-05-25 8:00:00.1231611592');
+        - sql:
+            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Четвертая задача', 'Описание второй задачи', 1, true, '2025-05-25 8:00:00.1231611592');

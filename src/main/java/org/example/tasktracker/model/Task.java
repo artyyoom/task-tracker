@@ -27,7 +27,7 @@ public class Task {
     private Long userId;
 
     @Column(nullable = false)
-    private String status;
+    private boolean status;
 
     private Timestamp done_timestamp;
 }

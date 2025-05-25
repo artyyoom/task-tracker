@@ -18,12 +18,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select t from Task t" +
             " where t.userId = :userId" +
-            " and t.status = :status" +
+            " and t.status = true" +
             " and t.done_timestamp between :startOfDay and :endOfDay")
-    List<Task> findTasksByUserIdAndStatus(
+    List<Task> findFinishedTasksByUserId(
             @Param("userId") Long id,
-            @Param("status") String status,
             @Param("startOfDay") LocalDateTime startOfDay,
             @Param("endOfDay") LocalDateTime endOfDay);
+
+    @Query("select t from Task t" +
+            " where t.userId = :userId" +
+            " and t.status = false")
+    List<Task> findUnfinishedTasksByUserId(@Param("userId") Long id);
 
 }

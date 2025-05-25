@@ -22,10 +22,10 @@ public class UserService {
     }
 
     public List<Task> getFinishedTasks(Long userId, LocalDateTime startOfDay, LocalDateTime endOfDay) {
-        return userRepository.findTasksByUserIdAndStatus(userId, "finished", startOfDay, endOfDay);
+        return userRepository.findFinishedTasksByUserId(userId, startOfDay, endOfDay);
     }
 
-    public List<Task> getUnfinishedTasks(Long userId, LocalDateTime startOfDay, LocalDateTime endOfDay) {
-        return userRepository.findTasksByUserIdAndStatus(userId, "unfinished", startOfDay, endOfDay);
+    public List<Task> getUnfinishedTasks(Long userId) {
+        return userRepository.findUnfinishedTasksByUserId(userId);
     }
 }

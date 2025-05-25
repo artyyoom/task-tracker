@@ -29,7 +29,7 @@ public class TaskService {
                 .orElseThrow(() -> new DataNotFoundException("Task not found"));
         taskById.setTitle(task.getTitle());
         taskById.setDescription(task.getDescription());
-        taskById.setStatus(task.getStatus());
+        taskById.setStatus(task.isStatus());
         taskById.setDone_timestamp(task.getDone_timestamp());
 
         return taskRepository.save(taskById);
