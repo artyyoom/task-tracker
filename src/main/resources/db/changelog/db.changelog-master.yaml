@@ -78,6 +78,16 @@ databaseChangeLog:
       author: arttt (generated)
       changes:
         - sql:
-            sql: INSERT INTO users (username, password, email) VALUES ('user', 'user', 'user@example.com');
+            sql: INSERT INTO users (username, password, email) VALUES ('user', 'user', 'artem_ponedelko@mail.ru');
         - sql:
-            sql: INSERT INTO users (username, password, email) VALUES ('admin', 'admin', 'admin@example.com');
+            sql: INSERT INTO users (username, password, email) VALUES ('admin', 'admin', 'ponedelkoa7@gmail.com');
+  - changeSet:
+      id: 4
+      author: arttt (generated)
+      changes:
+        - sql:
+            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Первая задача', 'Описание первой задачи', 1, 'finished', '2025-05-24 10:00:00');
+        - sql:
+            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Вторая задача', 'Описание второй задачи', 1, 'unfinished', '2025-05-24 10:00:00');
+        - sql:
+            sql: INSERT INTO tasks (title, description, user_id, status, done_timestamp) VALUES ('Третья задача', 'Описание третьей задачи', 2, 'finished', '2025-05-24 10:00:00');

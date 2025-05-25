@@ -4,13 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.example.tasktracker.model.Task;
 import org.example.tasktracker.model.User;
 import org.example.tasktracker.model.kafka.EmailTask;
-import org.example.tasktracker.service.TaskService;
 import org.example.tasktracker.service.UserService;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +22,8 @@ public class TaskReportSchedulerService {
 
     private static final String TASK_REPORT_TOPIC = "EMAIL-SENDING-TASKS";
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    /*@Scheduled(cron = "0 6 17 * * ?")*/
+    @Scheduled(fixedRate = 60000)
     public void sendDailyTaskReports() {
 
         List<User> allUsers = userService.findAllUsers();
@@ -36,11 +35,15 @@ public class TaskReportSchedulerService {
             List<Task> finishedTasks = userService.getFinishedTasks(user.getId(), today, yesterday);
             List<Task> unfinishedTasks = userService.getUnfinishedTasks(user.getId(), today, yesterday);
 
+            if (finishedTasks.isEmpty() && unfinishedTasks.isEmpty()) {
+                continue;
+            }
+
             StringBuilder emailBody = new StringBuilder();
 
             if (!unfinishedTasks.isEmpty()) {
                 int count = unfinishedTasks.size();
-                emailBody.append("У вас осталось ").append(count).append("несделанных задач");
+                emailBody.append("У вас осталось ").append(count).append(" несделанных задач ");
 
                 unfinishedTasks.forEach(task -> {
                     emailBody.append("- ").append(task.getTitle()).append("\n");
@@ -50,7 +53,7 @@ public class TaskReportSchedulerService {
             if (!finishedTasks.isEmpty()) {
 
                 int count = finishedTasks.size();
-                emailBody.append("За сегодня вы выполнили ").append(count).append(" задач:\n");
+                emailBody.append("\nЗа сегодня вы выполнили ").append(count).append(" задач:\n");
 
                 finishedTasks.forEach(task -> {
                     emailBody.append("- ").append(task.getTitle()).append("\n");
@@ -63,9 +66,7 @@ public class TaskReportSchedulerService {
                     .body(emailBody.toString())
                     .build();
 
-            kafkaTemplate.send(TASK_REPORT_TOPIC, emailTask);
+                kafkaTemplate.send(TASK_REPORT_TOPIC, emailTask);
         }
-
-
     }
 }
